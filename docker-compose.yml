@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  expressapi:
+    image: expressapi
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+  db:
+    image: mysql:latest
+    container_name: db
+    restart: always 
+    environment:
+      - MYSQL_DATABASE=db
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=123
+    volumes:
+      - ./data:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
